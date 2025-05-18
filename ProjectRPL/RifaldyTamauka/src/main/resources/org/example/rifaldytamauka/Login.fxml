@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.rifaldytamauka.LoginController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.rifaldytamauka.LoginController">
    <left>
       <AnchorPane prefHeight="500.0" prefWidth="350.0" style="-fx-background-color: #063659;" BorderPane.alignment="CENTER">
          <children>
@@ -62,7 +57,7 @@
             </Text>
             <CheckBox layoutX="96.0" layoutY="303.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="133.0" style="-fx-background-color: transparent;" text="Remember Me" textFill="#05121b" />
             <Text layoutX="99.0" layoutY="448.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Don't have an account ?" />
-            <Button fx:id="btnSignUp" layoutX="227.0" layoutY="431.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="57.0" style="-fx-background-color: none;" text="SignUp" textFill="#063659">
+            <Button fx:id="btnSignUp" layoutX="227.0" layoutY="431.0" mnemonicParsing="false" onAction="#gotoSignUp" prefHeight="26.0" prefWidth="57.0" style="-fx-background-color: none;" text="SignUp" textFill="#063659">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>

@@ -1,25 +1,22 @@
 package org.example.rifaldytamauka.data;
 
 public class User {
+    private int id;
+    private String email;
     private String username;
+    private String password;
 
-    public void setPass(String pass) {
-        this.pass = pass;
-    }
-
-    public void setUsername(String username) {
+    // konstruktor untuk Register (tanpa id)
+    public User(String email, String username, String password) {
+        this.email = email;
         this.username = username;
+        this.password = password;
+    }
+    // konstruktor full (dibaca dari DB)
+    public User(int id, String email, String username, String password) {
+        this(email, username, password);
+        this.id = id;
     }
 
-    private String pass;
-    public User(String username, String pass) {
-        this.username = username;
-        this.pass = pass;
-    }
-    public String getUsername() {
-        return username;
-    }
-    public String getPass() {
-        return pass;
-    }
+    /* getter-setter */
 }

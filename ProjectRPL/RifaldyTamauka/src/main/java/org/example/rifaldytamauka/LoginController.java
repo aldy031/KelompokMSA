@@ -58,7 +58,34 @@ public class LoginController {
             txtUsername.requestFocus();
         }
     }
+
+    @FXML
+    private void gotoSignUp(ActionEvent e) {
+        try {
+        /* 1)  jalur ABSOLUTE (diawali “/”)
+           2)  sesuai paket & lokasi di folder resources   */
+            Parent root = FXMLLoader.load(
+                    getClass().getResource(
+                            "/org/example/rifaldytamauka/SignUp.fxml"));
+
+            Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Sign-Up Page");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            new Alert(Alert.AlertType.ERROR,
+                    "Tidak bisa membuka Sign-Up:\n" + ex.getMessage())
+                    .showAndWait();
+        }
+    }
+
 }
+
+
+
+
+
+
 
 
 
