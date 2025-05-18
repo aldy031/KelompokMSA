@@ -11,6 +11,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.example.rifaldytamauka.data.User;
+import org.example.rifaldytamauka.repo.UserRepo;
 
 
 import java.io.IOException;
@@ -27,7 +29,11 @@ public class LoginController {
     @FXML
     private void onClickLogin(ActionEvent event) {
         Alert alert;
-        if (txtUsername.getText().equals(CORRECT_USERNAME) && txtPassword.getText().equals(CORRECT_PASSWORD)) {
+        String pass = txtPassword.getText();
+        String username = txtUsername.getText();
+        User user = UserRepo.login(username, pass);
+        if (user != null) {
+            UserManager.currentUser = user;
             alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setHeaderText("Information");
             alert.setContentText("Login success!!");

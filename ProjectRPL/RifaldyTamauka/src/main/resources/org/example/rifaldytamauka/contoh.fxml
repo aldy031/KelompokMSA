@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane fx:id="kumpulkan" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.rifaldytamauka.ContohController">
+   <children>
+      <TextField fx:id="jumlah" layoutX="123.0" layoutY="66.0" />
+      <TextField fx:id="kategori" layoutX="123.0" layoutY="116.0" />
+      <Label layoutX="35.0" layoutY="70.0" text="Jumlah" />
+      <Label layoutX="35.0" layoutY="120.0" text="Kategori" />
+      <Button layoutX="130.0" layoutY="175.0" mnemonicParsing="false" onAction="#onButtonSubmit" text="Button" />
+      <VBox fx:id="list" layoutX="302.0" layoutY="37.0" prefHeight="304.0" prefWidth="281.0" />
+      <Button layoutX="206.0" layoutY="177.0" mnemonicParsing="false" onAction="#onButtonShow" text="show" />
+   </children>
+</AnchorPane>

@@ -5,6 +5,8 @@ module org.example.rifaldytamauka {
     requires org.controlsfx.controls;
     requires com.dlsc.formsfx;
     requires org.kordamp.bootstrapfx.core;
+    requires java.sql;
+    requires java.desktop;
 
     opens org.example.rifaldytamauka to javafx.fxml;
     exports org.example.rifaldytamauka;
