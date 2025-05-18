@@ -32,7 +32,7 @@ public class LoginController {
         String pass = txtPassword.getText();
         String username = txtUsername.getText();
         User user = UserRepo.login(username, pass);
-        if (user != null) {
+        if (txtUsername.getText().equals(CORRECT_USERNAME) && txtPassword.getText().equals(CORRECT_PASSWORD)) {
             UserManager.currentUser = user;
             alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setHeaderText("Information");
