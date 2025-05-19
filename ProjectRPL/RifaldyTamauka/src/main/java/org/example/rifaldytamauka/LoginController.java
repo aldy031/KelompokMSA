@@ -1,7 +1,5 @@
-
 package org.example.rifaldytamauka;
 
-import javafx.scene.control.PasswordField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,11 +7,13 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import org.example.rifaldytamauka.data.User;
 import org.example.rifaldytamauka.repo.UserRepo;
-
 
 import java.io.IOException;
 
@@ -28,111 +28,81 @@ public class LoginController {
 
     @FXML
     private void onClickLogin(ActionEvent event) {
-        Alert alert;
-        String pass = txtPassword.getText();
+        doLogin(event);
+    }
+
+    @FXML
+    private void onKeyPress(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            doLogin(null); // bisa null karena tidak selalu lewat tombol
+        }
+    }
+
+    private void doLogin(ActionEvent event) {
         String username = txtUsername.getText();
-        User user = UserRepo.login(username, pass);
-        if (txtUsername.getText().equals(CORRECT_USERNAME) && txtPassword.getText().equals(CORRECT_PASSWORD)) {
-            UserManager.currentUser = user;
-            alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setHeaderText("Information");
-            alert.setContentText("Login success!!");
-            alert.showAndWait();
+        String password = txtPassword.getText();
+        Alert alert;
 
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("HalamanUtama.fxml"));
-                Parent root = loader.load();
+        // Cek hardcoded admin
+        if (username.equals(CORRECT_USERNAME) && password.equals(CORRECT_PASSWORD)) {
+            UserManager.currentUser = new User(0, "admin@example.com", "admin", "admin");
+            showAlert(Alert.AlertType.INFORMATION, "Information", "Login success!!");
 
-                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                stage.setScene(new Scene(root));
-                stage.setTitle("Halaman Utama");
-                stage.show();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            goToMainPage(event);
         } else {
-            alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("Error");
-            alert.setContentText("Login failed!! Please check again.");
-            alert.showAndWait();
-            txtUsername.requestFocus();
+            // Cek ke repository
+            User user = UserRepo.login(username, password);
+            if (user != null) {
+                UserManager.currentUser = user;
+                showAlert(Alert.AlertType.INFORMATION, "Information", "Login success!!");
+
+                goToMainPage(event);
+            } else {
+                showAlert(Alert.AlertType.ERROR, "Error", "Login failed!! Please check again.");
+                txtUsername.requestFocus();
+            }
+        }
+    }
+
+    private void goToMainPage(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("HalamanUtama.fxml"));
+            Parent root = loader.load();
+            Stage stage;
+            if (event != null) {
+                stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            } else {
+                // fallback jika event null (misalnya tekan Enter)
+                stage = (Stage) txtUsername.getScene().getWindow();
+            }
+            stage.setScene(new Scene(root));
+            stage.setTitle("Halaman Utama");
+            stage.centerOnScreen();
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Error", "Gagal membuka halaman utama:\n" + e.getMessage());
         }
     }
 
     @FXML
-    private void gotoSignUp(ActionEvent e) {
+    private void gotoSignUp(ActionEvent event) {
         try {
-        /* 1)  jalur ABSOLUTE (diawali “/”)
-           2)  sesuai paket & lokasi di folder resources   */
             Parent root = FXMLLoader.load(
-                    getClass().getResource(
-                            "/org/example/rifaldytamauka/SignUp.fxml"));
-
-            Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+                    getClass().getResource("/org/example/rifaldytamauka/SignUp.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.setTitle("Sign-Up Page");
         } catch (IOException ex) {
             ex.printStackTrace();
-            new Alert(Alert.AlertType.ERROR,
-                    "Tidak bisa membuka Sign-Up:\n" + ex.getMessage())
-                    .showAndWait();
+            showAlert(Alert.AlertType.ERROR, "Error", "Tidak bisa membuka Sign-Up:\n" + ex.getMessage());
         }
     }
 
+    private void showAlert(Alert.AlertType type, String header, String message) {
+        Alert alert = new Alert(type);
+        alert.setHeaderText(header);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 }
-
-
-
-
-
-
-
-
-
-//package org.example.rifaldytamauka;
-//
-//import javafx.fxml.FXML;
-//import javafx.scene.control.Alert;
-//import javafx.scene.control.PasswordField;
-//import javafx.scene.control.TextField;
-//import javafx.scene.input.KeyCode;
-//import javafx.scene.input.KeyEvent;
-//
-//import java.io.IOException;
-//
-//public class LoginController {
-//    private static final String CORRECT_USERNAME = "admin";
-//    private static final String CORRECT_PASSWORD = "admin";
-//
-//    @FXML private TextField txtUsername;
-//    @FXML private PasswordField txtPassword;
-//
-//    @FXML
-//    protected void onKeyPressEvent(KeyEvent event) throws IOException {
-//        if( event.getCode() == KeyCode.ENTER ) {
-//            btnClickLogin();
-//        }
-//    }
-//    @FXML
-//    protected void btnClickLogin() throws IOException {
-//        Alert alert;
-//        if (txtUsername.getText().equals(CORRECT_USERNAME) && txtPassword.getText().equals(CORRECT_PASSWORD)) {
-//            alert = new Alert(Alert.AlertType.INFORMATION);
-//            alert.setHeaderText("Information");
-//            alert.setContentText("Login success!!");
-//            alert.showAndWait();
-//            HelloApplication.setRoot("HalamanUtama", "",false);
-//        } else {
-//            alert = new Alert(Alert.AlertType.ERROR);
-//            alert.setHeaderText("Error");
-//            alert.setContentText("Login failed!! Please check again.");
-//            alert.showAndWait();
-//            txtUsername.requestFocus();
-//        }
-//    }
-//}
-
-
-
-
-

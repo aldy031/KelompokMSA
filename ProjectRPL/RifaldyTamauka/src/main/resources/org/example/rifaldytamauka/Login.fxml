@@ -1,36 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.rifaldytamauka.LoginController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.rifaldytamauka.LoginController">
    <left>
-      <AnchorPane prefHeight="500.0" prefWidth="350.0" style="-fx-background-color: #063659;" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="500.0" prefWidth="306.0" style="-fx-background-color: EEEEEE;" BorderPane.alignment="CENTER">
          <children>
-<!--            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="75.0" layoutY="78.0" pickOnBounds="true" preserveRatio="true">-->
-<!--               <image>-->
-<!--                  <Image url="@../../../org/example/rplboplisss/img/WhatsApp Image 2025-05-08 at 00.45.33_c54b7687.jpg" />-->
-<!--               </image>-->
-<!--            </ImageView>-->
-            <Text fill="WHITE" layoutX="70.0" layoutY="319.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SAM Mbgking">
+            <!--            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="75.0" layoutY="78.0" pickOnBounds="true" preserveRatio="true">-->
+            <!--               <image>-->
+            <!--                  <Image url="@../../../org/example/rplboplisss/img/WhatsApp Image 2025-05-08 at 00.45.33_c54b7687.jpg" />-->
+            <!--               </image>-->
+            <!--            </ImageView>-->
+            <Text fill="#063659" layoutX="37.0" layoutY="348.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SAM Personal Manage">
                <font>
                   <Font name="System Bold Italic" size="25.0" />
                </font>
             </Text>
+            <ImageView fitHeight="213.0" fitWidth="239.0" layoutX="35.0" layoutY="112.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@img/Kita.jpg" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
    </left>
    <right>
-      <AnchorPane prefHeight="500.0" prefWidth="350.0" style="-fx-background-color: #ffff;" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="500.0" prefWidth="404.0" style="-fx-background-color: #ffff;" BorderPane.alignment="CENTER">
          <children>
-            <Text fill="#063659" layoutX="134.0" layoutY="147.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User Login">
+            <Text fill="#063659" layoutX="134.0" layoutY="146.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User Login">
                <font>
                   <Font name="System Bold" size="21.0" />
                </font>
             </Text>
-            <Button fx:id="btnLogin" layoutX="95.0" layoutY="346.0" mnemonicParsing="false" onAction="#onClickLogin" prefHeight="37.0" prefWidth="191.0" style="-fx-background-color: #063659;" text="Login" textFill="WHITE">
+            <Button fx:id="btnLogin" layoutX="90.0" layoutY="288.0" mnemonicParsing="false" onAction="#onClickLogin" prefHeight="37.0" prefWidth="191.0" style="-fx-background-color: #063659;" text="Login" textFill="WHITE">
                <padding>
                   <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
                </padding>
@@ -38,26 +50,11 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <TextField fx:id="txtUsername" layoutX="114.0" layoutY="182.0" promptText="Username" />
-            <PasswordField fx:id="txtPassword" layoutX="113.0" layoutY="222.0" promptText="Password" />
-<!--            <ImageView fitHeight="43.0" fitWidth="25.0" layoutX="79.0" layoutY="196.0" pickOnBounds="true" preserveRatio="true">-->
-<!--               <image>-->
-<!--                  <Image url="@../../../org/example/rplboplisss/img/OIP.jpg" />-->
-<!--               </image>-->
-<!--            </ImageView>-->
-<!--            <ImageView fitHeight="43.0" fitWidth="25.0" layoutX="79.0" layoutY="244.0" pickOnBounds="true" preserveRatio="true">-->
-<!--               <image>-->
-<!--                  <Image url="@../../../org/example/rplboplisss/img/OIP (1).jpg" />-->
-<!--               </image>-->
-<!--            </ImageView>-->
-            <Text fill="#05121b" layoutX="112.0" layoutY="292.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Forgot Password?">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </Text>
-            <CheckBox layoutX="96.0" layoutY="303.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="133.0" style="-fx-background-color: transparent;" text="Remember Me" textFill="#05121b" />
-            <Text layoutX="99.0" layoutY="448.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Don't have an account ?" />
-            <Button fx:id="btnSignUp" layoutX="227.0" layoutY="431.0" mnemonicParsing="false" onAction="#gotoSignUp" prefHeight="26.0" prefWidth="57.0" style="-fx-background-color: none;" text="SignUp" textFill="#063659">
+            <TextField fx:id="txtUsername" layoutX="92.0" layoutY="166.0" prefHeight="26.0" prefWidth="190.0" promptText="Username" />
+            <PasswordField fx:id="txtPassword" layoutX="92.0" layoutY="205.0" prefHeight="26.0" prefWidth="189.0" promptText="Password" />
+            <CheckBox layoutX="92.0" layoutY="254.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="133.0" style="-fx-background-color: transparent;" text="Remember Me" textFill="#05121b" />
+            <Text layoutX="97.0" layoutY="448.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Don't have an account ?" />
+            <Button fx:id="btnSignUp" layoutX="222.0" layoutY="430.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="57.0" style="-fx-background-color: none;" text="SignUp" textFill="#063659">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
