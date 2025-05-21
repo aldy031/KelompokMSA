@@ -1,6 +1,6 @@
 package org.example.rifaldytamauka.repo;
 
-import org.example.rifaldytamauka.DBManager;
+import org.example.rifaldytamauka.util.DBConnector;
 import org.example.rifaldytamauka.data.User;
 
 import java.sql.Connection;
@@ -11,9 +11,9 @@ import java.sql.SQLException;
 public class UserRepo {
 
 
-    public static boolean register(String username, String password) {
+    public static boolean register(String username, String password, String p1) {
         String sql = "INSERT INTO users (username, password) VALUES (?, ?)";
-        try (Connection conn = DBManager.getInstance().getConnection();
+        try (Connection conn = DBConnector.getInstance().getConnection();
              PreparedStatement st = conn.prepareStatement(sql)) {
 
             st.setString(1, username);
@@ -28,7 +28,7 @@ public class UserRepo {
 
     public static User login(String username, String password) {
         String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
-        try (Connection conn = DBManager.getInstance().getConnection();
+        try (Connection conn = DBConnector.getInstance().getConnection();
              PreparedStatement st = conn.prepareStatement(sql)) {
 
             st.setString(1, username);

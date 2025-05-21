@@ -14,12 +14,19 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import org.example.rifaldytamauka.data.User;
 import org.example.rifaldytamauka.repo.UserRepo;
+import org.example.rifaldytamauka.util.DBConnector;
+import org.example.rifaldytamauka.util.SessionManager;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import java.io.IOException;
 
 public class LoginController {
-    private static final String CORRECT_USERNAME = "admin";
-    private static final String CORRECT_PASSWORD = "admin";
+//    private static final String CORRECT_USERNAME = "admin";
+//    private static final String CORRECT_PASSWORD = "admin";
 
     @FXML
     private TextField txtUsername;
@@ -27,40 +34,71 @@ public class LoginController {
     private PasswordField txtPassword;
 
     @FXML
-    private void onClickLogin(ActionEvent event) {
+    private void onClickLogin(ActionEvent event) throws SQLException {
         doLogin(event);
     }
 
     @FXML
-    private void onKeyPress(KeyEvent event) {
+    private void onKeyPress(KeyEvent event) throws SQLException {
         if (event.getCode() == KeyCode.ENTER) {
             doLogin(null); // bisa null karena tidak selalu lewat tombol
         }
     }
 
-    private void doLogin(ActionEvent event) {
-        String username = txtUsername.getText();
-        String password = txtPassword.getText();
+    private void doLogin(ActionEvent event) throws SQLException {
         Alert alert;
-
-        // Cek hardcoded admin
-        if (username.equals(CORRECT_USERNAME) && password.equals(CORRECT_PASSWORD)) {
-            UserManager.currentUser = new User(0, "admin@example.com", "admin", "admin");
-            showAlert(Alert.AlertType.INFORMATION, "Information", "Login success!!");
-
-            goToMainPage(event);
+        if (txtUsername.getText().isBlank() && txtPassword.getText().isBlank()) {
+            alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Error");
+            alert.setContentText("Login failed!! Please insert your username and password");
+            alert.showAndWait();
+            txtUsername.requestFocus();
         } else {
-            // Cek ke repository
-            User user = UserRepo.login(username, password);
-            if (user != null) {
-                UserManager.currentUser = user;
-                showAlert(Alert.AlertType.INFORMATION, "Information", "Login success!!");
+            validateLogin();
+        }
+    }
 
-                goToMainPage(event);
-            } else {
-                showAlert(Alert.AlertType.ERROR, "Error", "Login failed!! Please check again.");
-                txtUsername.requestFocus();
+    private void validateLogin() throws SQLException {
+        Connection connNEW = DBConnector.getInstance().getConnection();
+
+        String verif = "SELECT * FROM users WHERE username = '" + txtUsername.getText() + "' AND password = '" + txtPassword.getText() + "'";
+        Statement ps = connNEW.createStatement();
+        ResultSet rs = ps.executeQuery(verif);
+        try {
+            while (rs.next()) {
+                int userId = rs.getInt("id_user");
+                String username = rs.getString("username");
+                String password = rs.getString("password");
+                User loggedInUser = new User(userId, username, password);
+                Alert alert;
+                if (loggedInUser != null) {
+                    if(txtUsername.getText().equals("admin") && txtPassword.getText().equals("admin")) {
+                        alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setHeaderText("Information");
+                        alert.setContentText("Login success!!");
+                        alert.showAndWait();
+                        goToMainPage(null);
+                    }
+                    else {
+                        alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setHeaderText("Information");
+                        alert.setContentText("Login success!!");
+                        SessionManager.getInstance().setUserInfo(userId, username);
+                        SessionManager.getInstance().login();
+                        alert.showAndWait();
+                        goToMainPage(null);
+
+                    }
+                } else {
+                    alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setHeaderText("Error");
+                    alert.setContentText("Invalid Login!! Please check again.");
+                    alert.showAndWait();
+                    txtUsername.requestFocus();
+                }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
