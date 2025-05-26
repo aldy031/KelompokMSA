@@ -7,9 +7,29 @@ public class Transaksi {
     private String waktu;
     private String kategori;
     private int jumlah;
-    private String catatan; // Tambahan properti catatan
+    private String catatan;
+    private String jenis; // ✅ Tambahan properti jenis
 
     // Konstruktor lengkap
+    public Transaksi(String waktu, int id, String kategori, int jumlah, String catatan, String jenis) {
+        this.waktu = waktu;
+        this.id = id;
+        this.kategori = kategori;
+        this.jumlah = jumlah;
+        this.catatan = catatan;
+        this.jenis = jenis;
+    }
+
+    // Konstruktor tanpa ID
+    public Transaksi(String waktu, String kategori, int jumlah, String catatan, String jenis) {
+        this.waktu = waktu;
+        this.kategori = kategori;
+        this.jumlah = jumlah;
+        this.catatan = catatan;
+        this.jenis = jenis;
+    }
+
+    // Konstruktor saat insert (tanpa jenis)
     public Transaksi(String waktu, int id, String kategori, int jumlah, String catatan) {
         this.waktu = waktu;
         this.id = id;
@@ -18,27 +38,12 @@ public class Transaksi {
         this.catatan = catatan;
     }
 
-    // Konstruktor tanpa ID
-    public Transaksi(String waktu, String kategori, int jumlah, String catatan) {
-        this.waktu = waktu;
-        this.kategori = kategori;
-        this.jumlah = jumlah;
-        this.catatan = catatan;
-    }
-
-    // Konstruktor yang sering dipakai saat insert
-    public Transaksi(String waktu, int id, String kategori, int jumlah) {
-        this.waktu = waktu;
-        this.id = id;
-        this.kategori = kategori;
-        this.jumlah = jumlah;
-    }
-
-    // Konstruktor default
-    public Transaksi(String kategori, int jumlah) {
+    // Konstruktor default untuk testing atau cepat input
+    public Transaksi(String kategori, int jumlah, String jenis) {
         this.waktu = LocalDate.now().toString();
         this.kategori = kategori;
         this.jumlah = jumlah;
+        this.jenis = jenis;
     }
 
     // Getter dan Setter
@@ -80,5 +85,13 @@ public class Transaksi {
 
     public void setCatatan(String catatan) {
         this.catatan = catatan;
+    }
+
+    public String getJenis() {
+        return jenis;
+    }
+
+    public void setJenis(String jenis) {
+        this.jenis = jenis;
     }
 }

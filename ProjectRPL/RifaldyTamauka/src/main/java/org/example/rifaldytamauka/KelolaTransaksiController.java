@@ -6,20 +6,19 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.Scene;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.scene.Node;
-import org.example.rifaldytamauka.repo.TransaksiRepo;
 import org.example.rifaldytamauka.data.Transaksi;
+import org.example.rifaldytamauka.repo.TransaksiRepo;
 import org.example.rifaldytamauka.util.DBConnector;
 
-import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -36,8 +35,8 @@ public class KelolaTransaksiController implements Initializable {
     @FXML private TextField jumlahField;
     @FXML private TextField kategoriField;
     @FXML private TextField catatanField;
+    @FXML private TextField searchField;
 
-    @FXML private  TextField searchField;
     @FXML private TableView<Transaksi> transaksiTable;
     @FXML private TableColumn<Transaksi, String> tanggalColumn;
     @FXML private TableColumn<Transaksi, String> kategoriColumn;
@@ -45,46 +44,40 @@ public class KelolaTransaksiController implements Initializable {
     @FXML private TableColumn<Transaksi, Integer> jumlahColumn;
 
     private FilteredList<Transaksi> transaksiFilteredList;
-    Transaksi selectedTransaksi;
     private Connection connection;
+
     private final String DB_URL = "jdbc:sqlite:SAMbenking.sqlite";
+
+    private Transaksi selectedTransaksi;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        transaksiFilteredList = new FilteredList<>(FXCollections.observableList(FXCollections.observableArrayList()));
+        transaksiFilteredList = new FilteredList<>(FXCollections.observableArrayList());
         transaksiTable.setItems(transaksiFilteredList);
-        searchField.textProperty().addListener(
-                (observableValue, oldValue, newValue) -> transaksiFilteredList.setPredicate(createPredicate(newValue))
-        );
+
         tanggalColumn.setCellValueFactory(new PropertyValueFactory<>("waktu"));
         kategoriColumn.setCellValueFactory(new PropertyValueFactory<>("kategori"));
         catatanColumn.setCellValueFactory(new PropertyValueFactory<>("catatan"));
         jumlahColumn.setCellValueFactory(new PropertyValueFactory<>("jumlah"));
+
+        searchField.textProperty().addListener((observable, oldValue, newValue) ->
+                transaksiFilteredList.setPredicate(createPredicate(newValue)));
+
         connection = DBConnector.getInstance().getConnection();
         getAllData();
+
         transaksiTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Transaksi>() {
             @Override
-            public void changed(ObservableValue<? extends Transaksi> observableValue, Transaksi course, Transaksi t1) {
-                if (observableValue.getValue() != null) {
-                    selectedTransaksi = observableValue.getValue();
-                    tanggalColumn.setText(observableValue.getValue().getWaktu());
-                    kategoriColumn.setText(observableValue.getValue().getKategori());
-                    catatanColumn.setText(observableValue.getValue().getCatatan());
-                    jumlahColumn.setText(Integer.toString(observableValue.getValue().getJumlah()));
+            public void changed(ObservableValue<? extends Transaksi> observableValue, Transaksi oldVal, Transaksi newVal) {
+                if (newVal != null) {
+                    selectedTransaksi = newVal;
+                    tanggalField.setText(newVal.getWaktu());
+                    kategoriField.setText(newVal.getKategori());
+                    catatanField.setText(newVal.getCatatan());
+                    jumlahField.setText(String.valueOf(newVal.getJumlah()));
                 }
             }
         });
-
-        //setup combo box
-//        cbJenisPaket.getItems().add(Membership.JENIS_PAKET_BRONZE);
-//        cbJenisPaket.getItems().add(Membership.JENIS_PAKET_SILVER);
-//        cbJenisPaket.getItems().add(Membership.JENIS_PAKET_GOLD);
-//        bersihkan();
-    }
-
-    private void loadTransaksiFromDatabase() {
-        List<Transaksi> list = TransaksiRepo.getAllTransaksi();
-        transaksiTable.getItems().setAll(list);
     }
 
     private ObservableList<Transaksi> getObservableList() {
@@ -102,13 +95,11 @@ public class KelolaTransaksiController implements Initializable {
                 String kategori = rs.getString("kategori");
                 int jumlah = rs.getInt("jumlah");
                 String catatan = rs.getString("catatan");
-                Transaksi transaki = new Transaksi(
-                        waktu, id, kategori,
-                        jumlah, catatan);
-                getObservableList().add(transaki);
+
+                Transaksi transaksi = new Transaksi(waktu, id, kategori, jumlah, catatan);
+                getObservableList().add(transaksi);
             }
         } catch (SQLException e) {
-            // Handle database query error
             e.printStackTrace();
         }
     }
@@ -122,10 +113,11 @@ public class KelolaTransaksiController implements Initializable {
             int jumlah = Integer.parseInt(jumlahField.getText());
 
             Transaksi transaksi = new Transaksi(tanggal, 0, kategori, jumlah, catatan);
-//            transaksi.setCatatan(catatan); // jika ada field catatan di objek
             TransaksiRepo.insertTransaksi(transaksi);
 
-            transaksiTable.getItems().add(transaksi);
+            // Tambahkan ke list sumbernya (bukan langsung ke TableView)
+            getObservableList().add(transaksi);
+
             clearForm();
         } catch (Exception e) {
             e.printStackTrace();
@@ -140,7 +132,7 @@ public class KelolaTransaksiController implements Initializable {
     }
 
     private boolean searchFindsTransaksi(Transaksi transaksi, String searchText) {
-        return (transaksi.getKategori().toLowerCase().contains(searchText.toLowerCase()));
+        return transaksi.getKategori().toLowerCase().contains(searchText.toLowerCase());
     }
 
     private Predicate<Transaksi> createPredicate(String searchText) {
@@ -152,12 +144,12 @@ public class KelolaTransaksiController implements Initializable {
 
     @FXML
     private void switchToPemasukan() {
-        // opsional logika mode
+        // opsional logika mode pemasukan
     }
 
     @FXML
     private void switchToPengeluaran() {
-        // opsional logika mode
+        // opsional logika mode pengeluaran
     }
 
     @FXML
@@ -171,16 +163,14 @@ public class KelolaTransaksiController implements Initializable {
     }
 
     @FXML
-    private void Logout() {
-        // logout logic
+    private void navigateToLihatTransaksi(MouseEvent event) {
+        navigate(event, "LihatTransaksi.fxml");
     }
 
     @FXML
-    private void simpanTransaksi(ActionEvent event) {
-        // Logika untuk menyimpan transaksi
-        System.out.println("Tombol Simpan ditekan");
+    private void Logout() {
+        // logika logout
     }
-
 
     private void navigate(MouseEvent event, String fxmlFile) {
         try {

@@ -10,31 +10,21 @@ public class TransaksiRepo {
 
     // Menambahkan transaksi baru ke database
     public static void insertTransaksi(Transaksi transaksi) {
-        try {
-            Connection conn = DBConnector.getInstance().getConnection();
-            PreparedStatement stmt = conn.prepareStatement(
-                    "INSERT INTO Transaksi (kategori, jumlah, waktu) VALUES (?, ?, ?)"
-            );
+        String sql = "INSERT INTO Transaksi (waktu, kategori, jumlah, catatan, jenis) VALUES (?, ?, ?, ?, ?)";
+        try (Connection conn = DBConnector.getInstance().getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            // Logging
-            System.out.println("Menambahkan transaksi ke database:");
-            System.out.println("Kategori: " + transaksi.getKategori());
-            System.out.println("Jumlah: " + transaksi.getJumlah());
-            System.out.println("Waktu: " + transaksi.getWaktu());
+            pstmt.setString(1, transaksi.getWaktu());
+            pstmt.setString(2, transaksi.getKategori());
+            pstmt.setInt(3, transaksi.getJumlah());
+            pstmt.setString(4, transaksi.getCatatan());
+            pstmt.setString(5, transaksi.getJenis()); // ✅ Menambahkan jenis
 
-            stmt.setString(1, transaksi.getKategori());
-            stmt.setInt(2, transaksi.getJumlah());
-            stmt.setString(3, transaksi.getWaktu());
-            stmt.executeUpdate();
-
-            System.out.println("Transaksi berhasil disimpan.");
-
+            pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new RuntimeException("Gagal menambahkan transaksi: " + e.getMessage());
         }
     }
-
 
     // Mengambil semua transaksi dari database
     public static ArrayList<Transaksi> getAllTransaksi() {
@@ -45,15 +35,14 @@ public class TransaksiRepo {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                // Membuat objek Transaksi dari hasil query
                 Transaksi transaksi = new Transaksi(
-                        rs.getString("waktu"),   // Mengambil data kolom "waktu"
-                        rs.getInt("id"),        // Mengambil data kolom "id"
-                        rs.getString("kategori"), // Mengambil data kolom "kategori"
-                        rs.getInt("jumlah"),    // Mengambil data kolom "jumlah"
-                        rs.getString("catatan") // Mengambil data kolom "catatan"
+                        rs.getString("waktu"),
+                        rs.getInt("id"),
+                        rs.getString("kategori"),
+                        rs.getInt("jumlah"),
+                        rs.getString("catatan"),
+                        rs.getString("jenis") // ✅ Ambil jenis dari database
                 );
-                // Menambahkan objek Transaksi ke dalam ArrayList
                 transactions.add(transaksi);
             }
         } catch (SQLException e) {
@@ -77,11 +66,11 @@ public class TransaksiRepo {
                         rs.getInt("id"),
                         rs.getString("kategori"),
                         rs.getInt("jumlah"),
-                        rs.getString("catatan")
+                        rs.getString("catatan"),
+                        rs.getString("jenis") // ✅ Ambil jenis juga
                 );
                 transactions.add(transaksi);
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -33,10 +33,12 @@ public class HalamanUtamaController {
         }
     }
 
+
     @FXML
     private void bukaKelolaTransaksi(MouseEvent event) {
         pindahScene(event, "KelolaTransaksi.fxml");
     }
+
 
     @FXML
     private void bukaKelolaKategori(MouseEvent event) {

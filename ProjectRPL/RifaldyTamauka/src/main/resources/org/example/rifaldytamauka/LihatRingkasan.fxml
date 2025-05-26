@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="mainBorderPane" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.rifaldytamauka.LihatRingkasanController">
+
+    <top>
+        <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="750.0" spacing="20.0" styleClass="white-background" stylesheets="@css/Styles.css" BorderPane.alignment="CENTER">
+            <children>
+                <Label alignment="CENTER" prefHeight="50.0" prefWidth="171.0" text="Hello" textAlignment="CENTER" textFill="#42404d">
+                    <font>
+                        <Font name="SansSerif Regular" size="28.0" />
+                    </font>
+                </Label>
+
+                <Separator maxHeight="-Infinity" orientation="VERTICAL" prefHeight="36.0" prefWidth="10.0" />
+
+                <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" prefHeight="38.0" prefWidth="267.0" spacing="20.0" stylesheets="@css/Styles.css">
+                    <children>
+                        <TextField fx:id="searchField" prefHeight="26.0" prefWidth="250.0" promptText="Cari transaksi..." styleClass="transparent" stylesheets="@css/Styles.css" />
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@img/search.png" />
+                            </image>
+                        </ImageView>
+                    </children>
+               <styleClass>
+                  <String fx:value="round-layout" />
+                  <String fx:value="transparent" />
+                  <String fx:value="white-background" />
+               </styleClass>
+                </HBox>
+
+                <Pane prefHeight="50.0" prefWidth="66.0" HBox.hgrow="ALWAYS" />
+                <HBox alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="37.0" />
+
+                <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0">
+                    <children>
+                        <Label prefHeight="46.0" prefWidth="117.0" text="Jalu Prakasya">
+                            <font>
+                                <Font name="SansSerif Regular" size="18.0" />
+                            </font>
+                        </Label>
+                        <ImageView fitHeight="50.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@img/jalu.png" />
+                            </image>
+                        </ImageView>
+                    </children>
+                    <opaqueInsets>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    </opaqueInsets>
+                </HBox>
+            </children>
+        </HBox>
+    </top>
+    <left>
+        <HBox prefHeight="489.0" prefWidth="190.0" styleClass="white-background" stylesheets="@css/Styles.css" BorderPane.alignment="CENTER">
+            <children>
+                <VBox prefHeight="644.0" prefWidth="244.0">
+                    <children>
+                        <Label prefHeight="46.0" prefWidth="117.0" text="MENU UTAMA">
+                            <font>
+                                <Font name="SansSerif Regular" size="16.0" />
+                            </font>
+                            <VBox.margin>
+                                <Insets left="10.0" />
+                            </VBox.margin>
+                        </Label>
+                        <HBox alignment="CENTER" prefHeight="52.0" prefWidth="190.0" styleClass="selected-menu-item">
+                            <children>
+                                <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@img/graph.png" />
+                                    </image>
+                                </ImageView>
+                                <Label prefHeight="46.0" prefWidth="117.0" text="Lihat Ringkasan">
+                                    <font>
+                                        <Font size="16.0" />
+                                    </font>
+                                    <HBox.margin>
+                                        <Insets left="8.0" />
+                                    </HBox.margin>
+                                </Label>
+                            </children>
+                        </HBox>
+                        <HBox fx:id="kelolaTransaksiMenu" alignment="CENTER" onMouseClicked="#navigateToKelolaTransaksi" prefHeight="52.0" prefWidth="190.0">
+                            <children>
+                                <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@img/lihat Transaksi.png" />
+                                    </image>
+                                </ImageView>
+                                <Label prefHeight="46.0" prefWidth="117.0" text="Kelola Transaksi">
+                                    <font>
+                                        <Font name="SansSerif Regular" size="16.0" />
+                                    </font>
+                                    <HBox.margin>
+                                        <Insets left="8.0" />
+                                    </HBox.margin>
+                                </Label>
+                            </children>
+                        </HBox>
+                        <HBox fx:id="kelolaKategoriMenu" alignment="CENTER" onMouseClicked="#navigateToKelolaKategori" prefHeight="52.0" prefWidth="190.0">
+                            <children>
+                                <ImageView fitHeight="28.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@img/kategori.png" />
+                                    </image>
+                                </ImageView>
+                                <Label prefHeight="46.0" prefWidth="117.0" text="Kelola Kategori">
+                                    <font>
+                                        <Font name="SansSerif Regular" size="16.0" />
+                                    </font>
+                                    <HBox.margin>
+                                        <Insets left="8.0" />
+                                    </HBox.margin>
+                                </Label>
+                            </children>
+                        </HBox>
+                        <Separator prefWidth="200.0" />
+                        <VBox alignment="CENTER" prefHeight="68.0" prefWidth="190.0">
+                            <children>
+                                <Button fx:id="LogoutButton" mnemonicParsing="false" onAction="#Logout" prefHeight="26.0" prefWidth="94.0" style="-fx-background-color: #e13737;" stylesheets="@css/Styles.css" text="Log Out" textFill="WHITE">
+                                    <font>
+                                        <Font name="PT Sans Caption" size="13.0" />
+                                    </font>
+                                </Button>
+                            </children>
+                        </VBox>
+                    </children>
+                </VBox>
+            </children>
+        </HBox>
+    </left>
+    <center>
+        <VBox prefHeight="644.0" prefWidth="869.0" spacing="20.0" BorderPane.alignment="CENTER">
+            <children>
+                <!-- Cards Row 1: Total Pemasukan, Total Pengeluaran, Saldo -->
+                <HBox prefHeight="150.0" prefWidth="869.0" spacing="20.0">
+                    <children>
+                        <!-- Total Pemasukan Card -->
+                        <VBox alignment="TOP_LEFT" prefHeight="140.0" prefWidth="280.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 15; -fx-border-radius: 15; -fx-border-color: #E0E0E0; -fx-border-width: 1;">
+                            <children>
+                                <Label text="Total Pemasukan" textFill="#9E9E9E">
+                                    <font>
+                                        <Font name="MuktaMahee Regular" size="14.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="totalPemasukanLabel" text="Rp 5.250.000" textFill="#2196F3">
+                                    <font>
+                                        <Font name="MuktaMahee ExtraBold" size="28.0" />
+                                    </font>
+                                    <VBox.margin>
+                                        <Insets top="5.0" />
+                                    </VBox.margin>
+                                </Label>
+                                <Label fx:id="perubahanPemasukanLabel" text="↑ 12% dari bulan lalu" textFill="#4CAF50">
+                                    <font>
+                                        <Font name="MuktaMahee Regular" size="12.0" />
+                                    </font>
+                                    <VBox.margin>
+                                        <Insets top="10.0" />
+                                    </VBox.margin>
+                                </Label>
+                            </children>
+                            <padding>
+                                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                            </padding>
+                        </VBox>
+
+                        <!-- Total Pengeluaran Card -->
+                        <VBox alignment="TOP_LEFT" prefHeight="140.0" prefWidth="280.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 15; -fx-border-radius: 15; -fx-border-color: #E0E0E0; -fx-border-width: 1;">
+                            <children>
+                                <Label text="Total Pengeluaran" textFill="#9E9E9E">
+                                    <font>
+                                        <Font name="MuktaMahee Regular" size="14.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="totalPengeluaranLabel" text="Rp 3.720.000" textFill="#F44336">
+                                    <font>
+                                        <Font name="MuktaMahee ExtraBold" size="28.0" />
+                                    </font>
+                                    <VBox.margin>
+                                        <Insets top="5.0" />
+                                    </VBox.margin>
+                                </Label>
+                                <Label fx:id="perubahanPengeluaranLabel" text="↑ 5% dari bulan lalu" textFill="#F44336">
+                                    <font>
+                                        <Font name="MuktaMahee Regular" size="12.0" />
+                                    </font>
+                                    <VBox.margin>
+                                        <Insets top="10.0" />
+                                    </VBox.margin>
+                                </Label>
+                            </children>
+                            <padding>
+                                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                            </padding>
+                        </VBox>
+
+                        <!-- Saldo Card -->
+                        <VBox alignment="TOP_LEFT" prefHeight="140.0" prefWidth="280.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 15; -fx-border-radius: 15; -fx-border-color: #E0E0E0; -fx-border-width: 1;">
+                            <children>
+                                <Label text="Saldo" textFill="#9E9E9E">
+                                    <font>
+                                        <Font name="MuktaMahee Regular" size="14.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="saldoLabel" text="Rp 1.530.000" textFill="#42404d">
+                                    <font>
+                                        <Font name="MuktaMahee ExtraBold" size="28.0" />
+                                    </font>
+                                    <VBox.margin>
+                                        <Insets top="5.0" />
+                                    </VBox.margin>
+                                </Label>
+                                <Label fx:id="perubahanSaldoLabel" text="↑ 8% dari bulan lalu" textFill="#4CAF50">
+                                    <font>
+                                        <Font name="MuktaMahee Regular" size="12.0" />
+                                    </font>
+                                    <VBox.margin>
+                                        <Insets top="10.0" />
+                                    </VBox.margin>
+                                </Label>
+                            </children>
+                            <padding>
+                                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                            </padding>
+                        </VBox>
+                    </children>
+                </HBox>
+
+                <!-- Charts Row -->
+                <HBox prefHeight="350.0" prefWidth="869.0" spacing="20.0">
+                    <children>
+                        <!-- Distribusi Pengeluaran Card -->
+                        <VBox alignment="TOP_LEFT" prefHeight="350.0" prefWidth="425.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 15; -fx-border-radius: 15; -fx-border-color: #E0E0E0; -fx-border-width: 1;">
+                            <children>
+                                <Label text="Distribusi Pengeluaran" textFill="#42404d">
+                                    <font>
+                                        <Font name="MuktaMahee Bold" size="18.0" />
+                                    </font>
+                                </Label>
+
+                                <!-- Pie Chart -->
+                                <PieChart fx:id="pengeluaranPieChart" prefHeight="250.0" prefWidth="385.0" VBox.vgrow="ALWAYS">
+                                    <VBox.margin>
+                                        <Insets top="10.0" />
+                                    </VBox.margin>
+                                </PieChart>
+
+                                <!-- Legend -->
+                                <VBox prefHeight="60.0" prefWidth="385.0" spacing="5.0">
+                                    <children>
+                                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                            <children>
+                                                <HBox spacing="15.0">
+                                                    <children>
+                                                        <HBox alignment="CENTER_LEFT" spacing="5.0">
+                                                            <children>
+                                                                <Pane prefHeight="10.0" prefWidth="15.0" style="-fx-background-color: #F44336; -fx-background-radius: 2;" />
+                                                                <Label text="Makanan - 30%" textFill="#42404d">
+                                                                    <font>
+                                                                        <Font name="MuktaMahee Regular" size="11.0" />
+                                                                    </font>
+                                                                </Label>
+                                                            </children>
+                                                        </HBox>
+                                                        <HBox alignment="CENTER_LEFT" spacing="5.0">
+                                                            <children>
+                                                                <Pane prefHeight="10.0" prefWidth="15.0" style="-fx-background-color: #2196F3; -fx-background-radius: 2;" />
+                                                                <Label text="Transportasi - 20%" textFill="#42404d">
+                                                                    <font>
+                                                                        <Font name="MuktaMahee Regular" size="11.0" />
+                                                                    </font>
+                                                                </Label>
+                                                            </children>
+                                                        </HBox>
+                                                        <HBox alignment="CENTER_LEFT" spacing="5.0">
+                                                            <children>
+                                                                <Pane prefHeight="10.0" prefWidth="15.0" style="-fx-background-color: #4CAF50; -fx-background-radius: 2;" />
+                                                                <Label text="Belanja - 15%" textFill="#42404d">
+                                                                    <font>
+                                                                        <Font name="MuktaMahee Regular" size="11.0" />
+                                                                    </font>
+                                                                </Label>
+                                                            </children>
+                                                        </HBox>
+                                                    </children>
+                                                </HBox>
+                                            </children>
+                                        </HBox>
+                                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                            <children>
+                                                <HBox spacing="15.0">
+                                                    <children>
+                                                        <HBox alignment="CENTER_LEFT" spacing="5.0">
+                                                            <children>
+                                                                <Pane prefHeight="10.0" prefWidth="15.0" style="-fx-background-color: #FFC107; -fx-background-radius: 2;" />
+                                                                <Label text="Hiburan - 15%" textFill="#42404d">
+                                                                    <font>
+                                                                        <Font name="MuktaMahee Regular" size="11.0" />
+                                                                    </font>
+                                                                </Label>
+                                                            </children>
+                                                        </HBox>
+                                                        <HBox alignment="CENTER_LEFT" spacing="5.0">
+                                                            <children>
+                                                                <Pane prefHeight="10.0" prefWidth="15.0" style="-fx-background-color: #9C27B0; -fx-background-radius: 2;" />
+                                                                <Label text="Kesehatan - 10%" textFill="#42404d">
+                                                                    <font>
+                                                                        <Font name="MuktaMahee Regular" size="11.0" />
+                                                                    </font>
+                                                                </Label>
+                                                            </children>
+                                                        </HBox>
+                                                        <HBox alignment="CENTER_LEFT" spacing="5.0">
+                                                            <children>
+                                                                <Pane prefHeight="10.0" prefWidth="15.0" style="-fx-background-color: #FF9800; -fx-background-radius: 2;" />
+                                                                <Label text="Lainnya - 10%" textFill="#42404d">
+                                                                    <font>
+                                                                        <Font name="MuktaMahee Regular" size="11.0" />
+                                                                    </font>
+                                                                </Label>
+                                                            </children>
+                                                        </HBox>
+                                                    </children>
+                                                </HBox>
+                                            </children>
+                                        </HBox>
+                                    </children>
+                                </VBox>
+                            </children>
+                            <padding>
+                                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                            </padding>
+                        </VBox>
+
+                        <!-- Tren Bulanan Card -->
+                        <VBox alignment="TOP_LEFT" prefHeight="350.0" prefWidth="425.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 15; -fx-border-radius: 15; -fx-border-color: #E0E0E0; -fx-border-width: 1;">
+                            <children>
+                                <Label text="Tren Bulanan" textFill="#42404d">
+                                    <font>
+                                        <Font name="MuktaMahee Bold" size="18.0" />
+                                    </font>
+                                </Label>
+
+                                <!-- Bar Chart -->
+                                <BarChart fx:id="trenBulananChart" prefHeight="280.0" prefWidth="385.0" VBox.vgrow="ALWAYS">
+                                    <xAxis>
+                                        <CategoryAxis fx:id="bulanAxis" />
+                                    </xAxis>
+                                    <yAxis>
+                                        <NumberAxis fx:id="jumlahAxis" />
+                                    </yAxis>
+                                    <VBox.margin>
+                                        <Insets top="10.0" />
+                                    </VBox.margin>
+                                </BarChart>
+                            </children>
+                            <padding>
+                                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                            </padding>
+                        </VBox>
+                    </children>
+                </HBox>
+            </children>
+            <padding>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            </padding>
+        </VBox>
+    </center>
+</BorderPane>
