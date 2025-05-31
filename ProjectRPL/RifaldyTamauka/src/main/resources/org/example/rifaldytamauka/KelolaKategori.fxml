@@ -1,38 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="694.0" prefWidth="1059.0" stylesheets="@css/Styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.rifaldytamauka.KelolaKategoriController">
+<BorderPane prefHeight="694.0" prefWidth="1059.0" stylesheets="@css/Styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.rifaldytamauka.KelolaKategoriController">
     <top>
-        <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="750.0" spacing="20.0" styleClass="white-background" BorderPane.alignment="CENTER">
+        <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="20.0" styleClass="white-background" BorderPane.alignment="CENTER">
             <children>
-                <Label alignment="CENTER" prefHeight="50.0" prefWidth="171.0" text="Hello" textAlignment="CENTER" textFill="#42404d">
+                <Label prefHeight="50.0" prefWidth="171.0" text="Hello" textFill="#42404d">
                     <font>
                         <Font name="SansSerif Regular" size="28.0" />
                     </font>
                 </Label>
-
-                <Separator maxHeight="-Infinity" orientation="VERTICAL" prefHeight="36.0" prefWidth="10.0" />
-
-                <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" prefHeight="38.0" prefWidth="267.0" spacing="20.0" styleClass="round-layout">
+                <Separator orientation="VERTICAL" prefHeight="36.0" prefWidth="10.0" />
+                <HBox alignment="CENTER_RIGHT" prefHeight="38.0" spacing="20.0" styleClass="round-layout">
                     <children>
                         <TextField fx:id="searchField" prefHeight="26.0" prefWidth="250.0" promptText="Cari kategori..." styleClass="transparent" />
-                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="20.0" fitWidth="20.0" preserveRatio="true">
                             <image>
                                 <Image url="@img/search.png" />
                             </image>
                         </ImageView>
                     </children>
                 </HBox>
-
                 <Pane prefHeight="50.0" prefWidth="66.0" HBox.hgrow="ALWAYS" />
                 <HBox alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="37.0" />
-
                 <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0">
                     <children>
                         <Label prefHeight="46.0" prefWidth="117.0" text="Jalu Prakasya">
@@ -40,7 +48,7 @@
                                 <Font name="MuktaMahee ExtraBold" size="18.0" />
                             </font>
                         </Label>
-                        <ImageView fitHeight="50.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="50.0" fitWidth="60.0" preserveRatio="true">
                             <image>
                                 <Image url="@img/jalu.png" />
                             </image>
@@ -53,12 +61,13 @@
             </children>
         </HBox>
     </top>
+
     <left>
-        <HBox prefHeight="489.0" prefWidth="190.0" styleClass="white-background" stylesheets="@css/Styles.css" BorderPane.alignment="CENTER">
+        <HBox prefWidth="190.0" styleClass="white-background" BorderPane.alignment="CENTER">
             <children>
-                <VBox prefHeight="644.0" prefWidth="244.0">
+                <VBox prefWidth="244.0">
                     <children>
-                        <Label prefHeight="46.0" prefWidth="117.0" text="MENU UTAMA">
+                        <Label text="MENU UTAMA">
                             <font>
                                 <Font name="SansSerif Regular" size="16.0" />
                             </font>
@@ -66,14 +75,14 @@
                                 <Insets left="10.0" />
                             </VBox.margin>
                         </Label>
-                        <HBox fx:id="lihatRingkasanMenu" alignment="CENTER" onMouseClicked="#navigateToLihatRingkasan" prefHeight="52.0" prefWidth="190.0">
+                        <HBox fx:id="lihatRingkasanMenu" alignment="CENTER" onMouseClicked="#navigateToLihatRingkasan" prefHeight="52.0">
                             <children>
-                                <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                <ImageView fitHeight="30.0" fitWidth="30.0" preserveRatio="true">
                                     <image>
                                         <Image url="@img/graph.png" />
                                     </image>
                                 </ImageView>
-                                <Label prefHeight="46.0" prefWidth="117.0" text="Lihat Ringkasan">
+                                <Label text="Lihat Ringkasan">
                                     <font>
                                         <Font name="SansSerif Regular" size="16.0" />
                                     </font>
@@ -83,14 +92,14 @@
                                 </Label>
                             </children>
                         </HBox>
-                        <HBox fx:id="kelolaTransaksiMenu" alignment="CENTER" onMouseClicked="#navigateToKelolaTransaksi" prefHeight="52.0" prefWidth="190.0">
+                        <HBox fx:id="kelolaTransaksiMenu" alignment="CENTER" onMouseClicked="#navigateToKelolaTransaksi" prefHeight="52.0">
                             <children>
-                                <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                                <ImageView fitHeight="35.0" fitWidth="35.0" preserveRatio="true">
                                     <image>
                                         <Image url="@img/lihat Transaksi.png" />
                                     </image>
                                 </ImageView>
-                                <Label prefHeight="46.0" prefWidth="117.0" text="Kelola Transaksi">
+                                <Label text="Kelola Transaksi">
                                     <font>
                                         <Font name="SansSerif Regular" size="16.0" />
                                     </font>
@@ -100,14 +109,14 @@
                                 </Label>
                             </children>
                         </HBox>
-                        <HBox alignment="CENTER" prefHeight="52.0" prefWidth="190.0" styleClass="selected-menu-item">
+                        <HBox alignment="CENTER" prefHeight="52.0" styleClass="selected-menu-item">
                             <children>
-                                <ImageView fitHeight="28.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                                <ImageView fitHeight="28.0" fitWidth="28.0" preserveRatio="true">
                                     <image>
                                         <Image url="@img/kategori.png" />
                                     </image>
                                 </ImageView>
-                                <Label prefHeight="46.0" prefWidth="117.0" text="Kelola Kategori">
+                                <Label text="Kelola Kategori">
                                     <font>
                                         <Font name="SansSerif Regular" size="16.0" />
                                     </font>
@@ -118,9 +127,9 @@
                             </children>
                         </HBox>
                         <Separator prefWidth="200.0" />
-                        <VBox alignment="CENTER" prefHeight="68.0" prefWidth="190.0">
+                        <VBox alignment="CENTER" prefHeight="68.0">
                             <children>
-                                <Button fx:id="LogoutButton" mnemonicParsing="false" onAction="#Logout" prefHeight="26.0" prefWidth="94.0" style="-fx-background-color: #e13737;" stylesheets="@css/Styles.css" text="Log Out" textFill="WHITE">
+                                <Button fx:id="LogoutButton" onAction="#Logout" prefHeight="26.0" prefWidth="94.0" style="-fx-background-color: #e13737;" text="Log Out" textFill="WHITE">
                                     <font>
                                         <Font name="PT Sans Caption" size="13.0" />
                                     </font>
@@ -132,274 +141,56 @@
             </children>
         </HBox>
     </left>
+
     <center>
-        <VBox prefHeight="644.0" prefWidth="869.0" spacing="20.0" BorderPane.alignment="CENTER">
+        <AnchorPane prefHeight="740.0" prefWidth="1068.0" style="-fx-background-color: #f000000;" BorderPane.alignment="CENTER">
             <children>
-                <!-- Tab untuk Pemasukan/Pengeluaran -->
-                <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="869.0" style="-fx-background-color: #5B9BD5; -fx-background-radius: 30;">
+                <Label layoutX="59.0" layoutY="46.0" text="Kelola Kategori">
+                    <font>
+                        <Font name="Verdana Bold" size="18.0" />
+                    </font>
+                </Label>
+                <GridPane layoutX="59.0" layoutY="88.0" prefHeight="117.0" prefWidth="617.0">
+                    <columnConstraints>
+                        <ColumnConstraints maxWidth="108.0" minWidth="100.7445068359375" prefWidth="107.19381713867188" />
+                        <ColumnConstraints maxWidth="20.2554931640625" minWidth="13.0" prefWidth="13.806182861328125" />
+                        <ColumnConstraints prefWidth="496.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints prefHeight="36.33" />
+                        <RowConstraints prefHeight="38.0" />
+                        <RowConstraints prefHeight="38.0" />
+                    </rowConstraints>
                     <children>
-                        <Button fx:id="kategoriPemasukanButton" mnemonicParsing="false" onAction="#switchToKategoriPemasukan" prefHeight="50.0" prefWidth="250.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 25; -fx-text-fill: #5B9BD5;" text="Kategori Pemasukan">
-                            <font>
-                                <Font name="MuktaMahee Bold" size="16.0" />
-                            </font>
-                        </Button>
-                        <Button fx:id="kategoriPengeluaranButton" mnemonicParsing="false" onAction="#switchToKategoriPengeluaran" prefHeight="50.0" prefWidth="250.0" style="-fx-background-color: transparent; -fx-text-fill: #FFFFFF;" text="Kategori Pengeluaran">
-                            <font>
-                                <Font name="MuktaMahee Bold" size="16.0" />
-                            </font>
-                        </Button>
+                        <Label text="Jenis Kategori" />
+                        <Label text=":" GridPane.columnIndex="1" />
+                        <TextField fx:id="txtNamaKategori" GridPane.columnIndex="2" />
+
+                        <Label text="Jumlah" GridPane.rowIndex="1" />
+                        <TextField fx:id="txtJumlah" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+
+                        <Label text="Tanggal" GridPane.rowIndex="2" />
+                        <Label text=":" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <TextField fx:id="txtDate" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                  <Label text=":" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                     </children>
-                    <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                    </padding>
+                </GridPane>
+                <HBox layoutX="58.0" layoutY="234.0" spacing="20.0">
+                    <children>
+                        <TextField fx:id="txtSearch" prefHeight="26.0" prefWidth="617.0" promptText="search" />
+                        <Button fx:id="btnSimpan" onAction="#onBtnSimpan" prefHeight="23.0" prefWidth="76.0" text="SIMPAN" />
+                        <Button fx:id="btnHapus" onAction="#onBtnHapus" prefHeight="23.0" prefWidth="65.0" text="HAPUS" />
+                    </children>
                 </HBox>
-
-                <!-- Form Tambah Kategori -->
-                <VBox prefWidth="869.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 15; -fx-border-radius: 15; -fx-border-color: #E0E0E0; -fx-border-width: 1;">
-                    <children>
-                        <Label text="Tambah Kategori Baru" textFill="#42404d">
-                            <font>
-                                <Font name="MuktaMahee Bold" size="20.0" />
-                            </font>
-                            <VBox.margin>
-                                <Insets bottom="20.0" left="30.0" top="25.0" />
-                            </VBox.margin>
-                        </Label>
-
-                        <!-- Form Input -->
-                        <HBox alignment="CENTER_LEFT" prefHeight="80.0" prefWidth="869.0" spacing="20.0">
-                            <children>
-                                <!-- Input Nama Kategori -->
-                                <TextField fx:id="namaKategoriField" prefHeight="50.0" prefWidth="350.0" promptText="Nama kategori..." style="-fx-background-color: #F5F5F5; -fx-background-radius: 10; -fx-border-color: transparent; -fx-font-size: 14px;">
-                                    <font>
-                                        <Font name="MuktaMahee Regular" size="14.0" />
-                                    </font>
-                                </TextField>
-
-                                <!-- Color Picker Circles -->
-                                <HBox spacing="10.0">
-                                    <children>
-                                        <Circle fx:id="colorBlue" fill="#5B9BD5" onMouseClicked="#selectColor" radius="20.0" stroke="#E0E0E0" strokeWidth="3.0" />
-                                        <Circle fx:id="colorGreen" fill="#70AD47" onMouseClicked="#selectColor" radius="20.0" stroke="transparent" strokeWidth="2.0" />
-                                        <Circle fx:id="colorRed" fill="#E15759" onMouseClicked="#selectColor" radius="20.0" stroke="transparent" strokeWidth="2.0" />
-                                        <Circle fx:id="colorYellow" fill="#FFC000" onMouseClicked="#selectColor" radius="20.0" stroke="transparent" strokeWidth="2.0" />
-                                        <Circle fx:id="colorPurple" fill="#7030A0" onMouseClicked="#selectColor" radius="20.0" stroke="transparent" strokeWidth="2.0" />
-                                        <Circle fx:id="colorOrange" fill="#FF9800" onMouseClicked="#selectColor" radius="20.0" stroke="transparent" strokeWidth="2.0" />
-                                    </children>
-                                </HBox>
-
-                                <!-- Tombol Tambah -->
-                                <Button fx:id="tambahKategoriButton" mnemonicParsing="false" onAction="#tambahKategori" prefHeight="50.0" prefWidth="120.0" style="-fx-background-color: #5B9BD5; -fx-background-radius: 10; -fx-text-fill: white;" text="Tambah">
-                                    <font>
-                                        <Font name="MuktaMahee Bold" size="16.0" />
-                                    </font>
-                                </Button>
-                            </children>
-                            <padding>
-                                <Insets bottom="25.0" left="30.0" right="30.0" />
-                            </padding>
-                        </HBox>
-                    </children>
-                </VBox>
-
-                <!-- Daftar Kategori -->
-                <VBox prefWidth="869.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 15; -fx-border-radius: 15; -fx-border-color: #E0E0E0; -fx-border-width: 1;" VBox.vgrow="ALWAYS">
-                    <children>
-                        <Label text="Daftar Kategori" textFill="#42404d">
-                            <font>
-                                <Font name="MuktaMahee Bold" size="20.0" />
-                            </font>
-                            <VBox.margin>
-                                <Insets bottom="20.0" left="30.0" top="25.0" />
-                            </VBox.margin>
-                        </Label>
-
-                        <!-- Kategori List Container -->
-                        <VBox fx:id="kategoriListContainer" prefWidth="869.0" spacing="15.0" VBox.vgrow="ALWAYS">
-                            <children>
-                                <!-- Kategori Item 1 - Gaji -->
-                                <HBox alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="809.0" spacing="20.0" style="-fx-background-color: #F8F9FA; -fx-background-radius: 10;">
-                                    <children>
-                                        <Circle fill="#5B9BD5" radius="25.0" />
-                                        <VBox alignment="CENTER_LEFT" prefWidth="200.0">
-                                            <children>
-                                                <Label text="Gaji" textFill="#42404d">
-                                                    <font>
-                                                        <Font name="MuktaMahee Bold" size="18.0" />
-                                                    </font>
-                                                </Label>
-                                            </children>
-                                        </VBox>
-                                        <Pane prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                                        <Label text="23 transaksi" textFill="#9E9E9E">
-                                            <font>
-                                                <Font name="MuktaMahee Regular" size="14.0" />
-                                            </font>
-                                        </Label>
-                                        <Pane prefWidth="50.0" />
-                                        <Label text="Total: Rp 15.000.000" textFill="#42404d">
-                                            <font>
-                                                <Font name="MuktaMahee Bold" size="16.0" />
-                                            </font>
-                                        </Label>
-                                        <HBox spacing="10.0">
-                                            <children>
-                                                <Button fx:id="editGajiButton" mnemonicParsing="false" onAction="#editKategori" prefHeight="35.0" prefWidth="45.0" style="-fx-background-color: #FFF3CD; -fx-background-radius: 8;">
-                                                    <graphic>
-                                                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                                            <image>
-                                                                <Image url="@img/edit.png" />
-                                                            </image>
-                                                        </ImageView>
-                                                    </graphic>
-                                                </Button>
-                                                <Button fx:id="deleteGajiButton" mnemonicParsing="false" onAction="#deleteKategori" prefHeight="35.0" prefWidth="45.0" style="-fx-background-color: #F8D7DA; -fx-background-radius: 8;">
-                                                    <graphic>
-                                                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                                            <image>
-                                                                <Image url="@img/delete.png" />
-                                                            </image>
-                                                        </ImageView>
-                                                    </graphic>
-                                                </Button>
-                                            </children>
-                                        </HBox>
-                                    </children>
-                                    <padding>
-                                        <Insets left="20.0" right="20.0" />
-                                    </padding>
-                                </HBox>
-
-                                <!-- Kategori Item 2 - Investasi -->
-                                <HBox alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="809.0" spacing="20.0" style="-fx-background-color: #F8F9FA; -fx-background-radius: 10;">
-                                    <children>
-                                        <Circle fill="#70AD47" radius="25.0" />
-                                        <VBox alignment="CENTER_LEFT" prefWidth="200.0">
-                                            <children>
-                                                <Label text="Investasi" textFill="#42404d">
-                                                    <font>
-                                                        <Font name="MuktaMahee Bold" size="18.0" />
-                                                    </font>
-                                                </Label>
-                                            </children>
-                                        </VBox>
-                                        <Pane prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                                        <Label text="5 transaksi" textFill="#9E9E9E">
-                                            <font>
-                                                <Font name="MuktaMahee Regular" size="14.0" />
-                                            </font>
-                                        </Label>
-                                        <Pane prefWidth="50.0" />
-                                        <Label text="Total: Rp 2.500.000" textFill="#42404d">
-                                            <font>
-                                                <Font name="MuktaMahee Bold" size="16.0" />
-                                            </font>
-                                        </Label>
-                                        <HBox spacing="10.0">
-                                            <children>
-                                                <Button fx:id="editInvestasiButton" mnemonicParsing="false" onAction="#editKategori" prefHeight="35.0" prefWidth="45.0" style="-fx-background-color: #FFF3CD; -fx-background-radius: 8;">
-                                                    <graphic>
-                                                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                                            <image>
-                                                                <Image url="@img/edit.png" />
-                                                            </image>
-                                                        </ImageView>
-                                                    </graphic>
-                                                </Button>
-                                                <Button fx:id="deleteInvestasiButton" mnemonicParsing="false" onAction="#deleteKategori" prefHeight="35.0" prefWidth="45.0" style="-fx-background-color: #F8D7DA; -fx-background-radius: 8;">
-                                                    <graphic>
-                                                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                                            <image>
-                                                                <Image url="@img/delete.png" />
-                                                            </image>
-                                                        </ImageView>
-                                                    </graphic>
-                                                </Button>
-                                            </children>
-                                        </HBox>
-                                    </children>
-                                    <padding>
-                                        <Insets left="20.0" right="20.0" />
-                                    </padding>
-                                </HBox>
-
-                                <!-- Kategori Item 3 - Bonus -->
-                                <HBox alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="809.0" spacing="20.0" style="-fx-background-color: #F8F9FA; -fx-background-radius: 10;">
-                                    <children>
-                                        <Circle fill="#FF9800" radius="25.0" />
-                                        <VBox alignment="CENTER_LEFT" prefWidth="200.0">
-                                            <children>
-                                                <Label text="Bonus" textFill="#42404d">
-                                                    <font>
-                                                        <Font name="MuktaMahee Bold" size="18.0" />
-                                                    </font>
-                                                </Label>
-                                            </children>
-                                        </VBox>
-                                        <Pane prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                                        <Label text="1 transaksi" textFill="#9E9E9E">
-                                            <font>
-                                                <Font name="MuktaMahee Regular" size="14.0" />
-                                            </font>
-                                        </Label>
-                                        <Pane prefWidth="50.0" />
-                                        <Label text="Total: Rp 1.000.000" textFill="#42404d">
-                                            <font>
-                                                <Font name="MuktaMahee Bold" size="16.0" />
-                                            </font>
-                                        </Label>
-                                        <HBox spacing="10.0">
-                                            <children>
-                                                <Button fx:id="editBonusButton" mnemonicParsing="false" onAction="#editKategori" prefHeight="35.0" prefWidth="45.0" style="-fx-background-color: #FFF3CD; -fx-background-radius: 8;">
-                                                    <graphic>
-                                                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                                            <image>
-                                                                <Image url="@img/edit.png" />
-                                                            </image>
-                                                        </ImageView>
-                                                    </graphic>
-                                                </Button>
-                                                <Button fx:id="deleteBonusButton" mnemonicParsing="false" onAction="#deleteKategori" prefHeight="35.0" prefWidth="45.0" style="-fx-background-color: #F8D7DA; -fx-background-radius: 8;">
-                                                    <graphic>
-                                                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                                            <image>
-                                                                <Image url="@img/delete.png" />
-                                                            </image>
-                                                        </ImageView>
-                                                    </graphic>
-                                                </Button>
-                                            </children>
-                                        </HBox>
-                                    </children>
-                                    <padding>
-                                        <Insets left="20.0" right="20.0" />
-                                    </padding>
-                                </HBox>
-                            </children>
-                            <padding>
-                                <Insets bottom="20.0" left="30.0" right="30.0" />
-                            </padding>
-                        </VBox>
-
-                        <!-- Tip Section -->
-                        <VBox prefWidth="869.0">
-                            <children>
-                                <Label text="Tip: Tetapkan target budget bulanan untuk setiap kategori pengeluaran" textFill="#9E9E9E">
-                                    <font>
-                                        <Font name="MuktaMahee Regular" size="14.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                            <padding>
-                                <Insets bottom="25.0" left="30.0" right="30.0" />
-                            </padding>
-                        </VBox>
-                    </children>
-                </VBox>
+                <TableView fx:id="table" layoutX="57.0" layoutY="273.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="255.0" prefWidth="801.0">
+                    <columns>
+                        <TableColumn fx:id="id" prefWidth="49.0" text="No." />
+                        <TableColumn fx:id="jenisKategori" prefWidth="225.824462890625" text="Jenis Kategori" />
+                        <TableColumn fx:id="kolomJumlah" prefWidth="242.67559814453125" text="Jumlah" />
+                        <TableColumn fx:id="kolomDate" prefWidth="282.99151611328125" text="Tanggal" />
+                    </columns>
+                </TableView>
             </children>
-            <padding>
-                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-            </padding>
-        </VBox>
+        </AnchorPane>
     </center>
 </BorderPane>

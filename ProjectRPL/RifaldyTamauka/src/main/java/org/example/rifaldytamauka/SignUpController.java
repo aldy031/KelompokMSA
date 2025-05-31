@@ -8,69 +8,99 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import org.example.rifaldytamauka.repo.UserRepo;
+import org.example.rifaldytamauka.util.DBConnector;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class SignUpController {
 
-    /* ---------- Field yang di-bind dari SignUp.fxml ---------- */
-    @FXML private TextField txtEmail;      // ← pastikan ada di FXML
-    @FXML private TextField txtUsername;
-    @FXML private PasswordField txtPass1;
-    @FXML private PasswordField txtPass2;
+    @FXML
+    private TextField txtEmail;
+    @FXML
+    private TextField txtUsername;
+    @FXML
+    private PasswordField txtPass1;
+    @FXML
+    private PasswordField txtPass2;
 
-    /* ----------------- REGISTER ----------------- */
     @FXML
     private void onClickRegister(ActionEvent e) {
         String email = txtEmail.getText().trim();
-        String user  = txtUsername.getText().trim();
-        String p1    = txtPass1.getText();
-        String p2    = txtPass2.getText();
+        String username = txtUsername.getText().trim();
+        String pass1 = txtPass1.getText();
+        String pass2 = txtPass2.getText();
 
-        /* --- validasi form --- */
-        if (email.isBlank() || user.isBlank() || p1.isBlank() || p2.isBlank()) {
-            alert(Alert.AlertType.ERROR, "Semua field wajib diisi!");
-            return;
-        }
-        if (!p1.equals(p2)) {
-            alert(Alert.AlertType.ERROR, "Password tidak sama!");
-            txtPass1.clear(); txtPass2.clear(); txtPass1.requestFocus();
+        // Validasi input
+        if (email.isBlank() || username.isBlank() || pass1.isBlank() || pass2.isBlank()) {
+            showAlert(Alert.AlertType.ERROR, "Semua field wajib diisi!");
             return;
         }
 
-        /* --- simpan ke database --- */
-        boolean ok = UserRepo.register(email, user, p1);
-        if (ok) {
-            alert(Alert.AlertType.INFORMATION, "Registrasi berhasil, silakan login.");
-            gotoLogin(e);                         // kembali ke halaman Login
-        } else {
-            alert(Alert.AlertType.ERROR, "Username sudah dipakai.");
-            txtUsername.requestFocus();
+        if (!pass1.equals(pass2)) {
+            showAlert(Alert.AlertType.ERROR, "Password tidak sama!");
+            txtPass1.clear();
+            txtPass2.clear();
+            txtPass1.requestFocus();
+            return;
+        }
+
+        // Koneksi database
+        try (Connection conn = DBConnector.getInstance().getConnection()) {
+            // Cek apakah username/email sudah ada
+            String checkQuery = "SELECT * FROM users WHERE username = ? OR email = ?";
+            try (PreparedStatement checkStmt = conn.prepareStatement(checkQuery)) {
+                checkStmt.setString(1, username);
+                checkStmt.setString(2, email);
+                ResultSet rs = checkStmt.executeQuery();
+
+                if (rs.next()) {
+                    showAlert(Alert.AlertType.ERROR, "Username atau email sudah dipakai.");
+                    txtUsername.requestFocus();
+                    return;
+                }
+            }
+
+            // Simpan data baru ke tabel users
+            String insertQuery = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
+            try (PreparedStatement insertStmt = conn.prepareStatement(insertQuery)) {
+                insertStmt.setString(1, username);
+                insertStmt.setString(2, email);
+                insertStmt.setString(3, pass1); // Simpan plain password (gunakan hash untuk keamanan)
+                int rowsInserted = insertStmt.executeUpdate();
+
+                if (rowsInserted > 0) {
+                    showAlert(Alert.AlertType.INFORMATION, "Registrasi berhasil! Silakan login.");
+                    gotoLogin(e);
+                } else {
+                    showAlert(Alert.AlertType.ERROR, "Registrasi gagal. Coba lagi.");
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Terjadi kesalahan: " + ex.getMessage());
         }
     }
 
-    /* -------------- BACK TO LOGIN -------------- */
     @FXML
     private void gotoLogin(ActionEvent e) {
-        loadScene(e, "/view/Login.fxml", "Login");
-    }
-
-    /* -------------- UTILITIES -------------- */
-    private void alert(Alert.AlertType type, String msg) {
-        new Alert(type, msg).showAndWait();
-    }
-
-    private void loadScene(ActionEvent e, String fxml, String title) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource(fxml));
+            Parent root = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
             Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
-            stage.setTitle(title);
+            stage.setTitle("Login");
+            stage.show();
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-
     }
 
+    private void showAlert(Alert.AlertType alertType, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 }

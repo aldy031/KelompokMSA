@@ -1,47 +1,83 @@
 package org.example.rifaldytamauka;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import org.example.rifaldytamauka.data.Ringkasan;
+import org.example.rifaldytamauka.data.Transaksi;
+import org.example.rifaldytamauka.util.DBConnector;
 
-public class KelolaKategoriController {
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ResourceBundle;
+import java.util.function.Predicate;
+
+public class KelolaKategoriController implements Initializable {
 
     @FXML
-    private TextField searchField;
+    private TextField txtNamaKategori;
+
+    @FXML
+    private TextField txtJumlah;
+
+    @FXML
+    private TextField txtDate;
+
+    @FXML
+    private TextField txtSearch;
 
     @FXML
     private TextField namaKategoriField;
 
     @FXML
-    private Button kategoriPemasukanButton;
+    private Button btnSimpan;
 
     @FXML
-    private Button kategoriPengeluaranButton;
+    private Button btnHapus;
 
     @FXML
-    private Button tambahKategoriButton;
+    private TableColumn<Ringkasan, Integer> id;
 
     @FXML
-    private Button LogoutButton;
+    private TableColumn<Ringkasan, String> jenisKategori;
 
     @FXML
-    private VBox kategoriListContainer;
+    private TableColumn<Ringkasan, Integer> kolomJumlah;
 
     @FXML
-    private HBox lihatRingkasanMenu, kelolaTransaksiMenu;
+    private TableColumn<Ringkasan, String> kolomDate;
 
     @FXML
-    private Circle colorBlue, colorGreen, colorRed, colorYellow, colorPurple, colorOrange;
+    private TableView<Ringkasan> table;
 
     private String selectedColor = "#5B9BD5"; // Default
 
-    // -------------------------------
-    // Navigasi
-    // -------------------------------
+    private FilteredList<Ringkasan> kategoriFilteredList;
+    private Ringkasan selectedKategori;
+    private Connection connection;
+    private final String DB_URL = "jdbc:sqlite:SAMbenking.sqlite";
+
+    private ObservableList<Ringkasan> getObservableList() {
+        return (ObservableList<Ringkasan>) kategoriFilteredList.getSource();
+    }
+
     @FXML
     private void navigateToLihatRingkasan(MouseEvent event) {
         System.out.println("Navigasi ke Lihat Ringkasan");
@@ -94,13 +130,6 @@ public class KelolaKategoriController {
         System.out.println("Warna dipilih: " + selectedColor);
 
         // Reset semua border stroke
-        colorBlue.setStroke(Color.TRANSPARENT);
-        colorGreen.setStroke(Color.TRANSPARENT);
-        colorRed.setStroke(Color.TRANSPARENT);
-        colorYellow.setStroke(Color.TRANSPARENT);
-        colorPurple.setStroke(Color.TRANSPARENT);
-        colorOrange.setStroke(Color.TRANSPARENT);
-
         clicked.setStroke(Color.web("#42404d"));
         clicked.setStrokeWidth(3);
     }
@@ -116,15 +145,150 @@ public class KelolaKategoriController {
     // Edit dan Delete Placeholder
     // -------------------------------
     @FXML
-    private void editKategori() {
-        System.out.println("Edit kategori dipanggil.");
-        // Tambahkan logika edit
+    void onBtnSimpan(ActionEvent event) {
+        try {
+            // Ambil nilai dari text fields
+            int id = selectedKategori.getId();
+            String kategori = txtNamaKategori.getText();
+            double saldo = Double.parseDouble(txtJumlah.getText()); // Konversi String ke double
+            // Atur waktu sekarang sebagai default
+
+            // Buat objek Ringkasan baru
+            Ringkasan ringkasanBaru = new Ringkasan(id, kategori, saldo);
+
+            // Periksa dan simpan perubahan
+            if (isKategoriUpdated()) {
+                if (updateCatatan(selectedKategori, ringkasanBaru)) {
+                    new Alert(Alert.AlertType.INFORMATION, "Kategori berhasil dirubah!").show();
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Kategori gagal dirubah!").show();
+                }
+            }
+            bersihkan();
+        } catch (NumberFormatException e) {
+            new Alert(Alert.AlertType.ERROR, "Saldo harus berupa angka!").show();
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, "Terjadi kesalahan: " + e.getMessage()).show();
+        }
     }
 
+
     @FXML
-    private void deleteKategori() {
-        System.out.println("Delete kategori dipanggil.");
-        // Tambahkan konfirmasi dan logika delete
+    void onBtnHapus(ActionEvent event) {
+        if (selectedKategori != null && deleteKategori(selectedKategori)) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Membership Dihapus!");
+            alert.show();
+            bersihkan();
+        }
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        kategoriFilteredList = new FilteredList<>(FXCollections.observableList(FXCollections.observableArrayList()));
+        table.setItems(kategoriFilteredList);
+        txtSearch.textProperty().addListener(
+                (observableValue, oldValue, newValue) -> kategoriFilteredList.setPredicate(createPredicate(newValue))
+        );
+        id.setCellValueFactory(new PropertyValueFactory<>("id"));
+        jenisKategori.setCellValueFactory(new PropertyValueFactory<>("kategori"));
+        kolomJumlah.setCellValueFactory(new PropertyValueFactory<>("saldo"));
+        connection = DBConnector.getInstance().getConnection();
+        getAllData();
+        table.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Ringkasan>() {
+            @Override
+            public void changed(ObservableValue<? extends Ringkasan> observableValue, Ringkasan course, Ringkasan t1) {
+                if (observableValue.getValue() != null) {
+                    selectedKategori = observableValue.getValue();
+                    txtNamaKategori.setText(observableValue.getValue().getKategori());
+                    txtJumlah.setText(String.format("%.2f", observableValue.getValue().getSaldo()));
+
+                }
+            }
+        });
+        bersihkan();
+    }
+
+    private void bersihkan() {
+        txtNamaKategori.clear();
+        txtDate.clear();
+        txtJumlah.clear();
+        txtSearch.clear();
+        txtSearch.requestFocus();
+        table.getSelectionModel().clearSelection();
+        selectedKategori = null;
+    }
+
+    private Predicate<Ringkasan> createPredicate(String searchText) {
+        return ringkasan -> {
+            if (searchText == null || searchText.isEmpty()) return true;
+            return searchFindsKategori(ringkasan, searchText);
+        };
+    }
+
+    private boolean searchFindsKategori(Ringkasan ringkasan, String searchText) {
+        return ringkasan.getKategori().toLowerCase().contains(searchText.toLowerCase());
+    }
+
+    private void getAllData() {
+        String query = "SELECT * FROM ringkasan";
+        getObservableList().clear();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String kategori = rs.getString("kategori");
+                int saldo = rs.getInt("saldo");
+
+                Ringkasan ringkasan = new Ringkasan(id, kategori, saldo);
+                getObservableList().add(ringkasan);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private boolean isKategoriUpdated() {
+        if (selectedKategori == null) {
+            return false;
+        }
+        if (!selectedKategori.getKategori().equalsIgnoreCase(txtNamaKategori.getText())){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean deleteKategori(Ringkasan ringkasan) {
+        String query = "DELETE FROM ringkasan WHERE id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, ringkasan.getId());
+            int rowsAffected = preparedStatement.executeUpdate();
+            if (rowsAffected > 0) {
+                getObservableList().remove(ringkasan);
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    private boolean updateCatatan(Ringkasan oldKategori, Ringkasan newKategori) {
+        String query = "UPDATE ringkasan SET kategori = ? WHERE id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, newKategori.getKategori());
+            preparedStatement.setInt(2, oldKategori.getId());
+            int rowsAffected = preparedStatement.executeUpdate();
+            if (rowsAffected > 0) {
+                int iOldKategori = getObservableList().indexOf(oldKategori);
+                getObservableList().set(iOldKategori, newKategori);
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle database query error
+        }
+        return false;
     }
 
     // -------------------------------

@@ -3,14 +3,14 @@ package org.example.rifaldytamauka.data;
 import java.time.LocalDate;
 
 public class Transaksi {
-    private int id;
     private String waktu;
+    private int id;
     private String kategori;
     private int jumlah;
     private String catatan;
-    private String jenis; // ✅ Tambahan properti jenis
+    private String jenis; // Tambahan untuk membedakan Pemasukan/Pengeluaran
 
-    // Konstruktor lengkap
+    // Constructor dengan jenis
     public Transaksi(String waktu, int id, String kategori, int jumlah, String catatan, String jenis) {
         this.waktu = waktu;
         this.id = id;
@@ -20,47 +20,31 @@ public class Transaksi {
         this.jenis = jenis;
     }
 
-    // Konstruktor tanpa ID
-    public Transaksi(String waktu, String kategori, int jumlah, String catatan, String jenis) {
-        this.waktu = waktu;
-        this.kategori = kategori;
-        this.jumlah = jumlah;
-        this.catatan = catatan;
-        this.jenis = jenis;
-    }
-
-    // Konstruktor saat insert (tanpa jenis)
+    // Constructor tanpa jenis (backward compatibility)
     public Transaksi(String waktu, int id, String kategori, int jumlah, String catatan) {
         this.waktu = waktu;
         this.id = id;
         this.kategori = kategori;
         this.jumlah = jumlah;
         this.catatan = catatan;
+        this.jenis = "Pengeluaran"; // default
     }
 
-    // Konstruktor default untuk testing atau cepat input
-    public Transaksi(String kategori, int jumlah, String jenis) {
-        this.waktu = LocalDate.now().toString();
-        this.kategori = kategori;
-        this.jumlah = jumlah;
-        this.jenis = jenis;
-    }
-
-    // Getter dan Setter
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
+    // Getters and Setters
     public String getWaktu() {
         return waktu;
     }
 
     public void setWaktu(String waktu) {
         this.waktu = waktu;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getKategori() {
@@ -93,5 +77,17 @@ public class Transaksi {
 
     public void setJenis(String jenis) {
         this.jenis = jenis;
+    }
+
+    @Override
+    public String toString() {
+        return "Transaksi{" +
+                "waktu='" + waktu + '\'' +
+                ", id=" + id +
+                ", kategori='" + kategori + '\'' +
+                ", jumlah=" + jumlah +
+                ", catatan='" + catatan + '\'' +
+                ", jenis='" + jenis + '\'' +
+                '}';
     }
 }
