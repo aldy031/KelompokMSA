@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.rifaldytamauka.SignUpController">
+   <left>
+      <AnchorPane prefHeight="500.0" prefWidth="306.0" style="-fx-background-color: EEEEEE;" BorderPane.alignment="CENTER">
+         <children>
+            <!--            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="75.0" layoutY="78.0" pickOnBounds="true" preserveRatio="true">-->
+            <!--               <image>-->
+            <!--                  <Image url="@../../../org/example/rplboplisss/img/WhatsApp Image 2025-05-08 at 00.45.33_c54b7687.jpg" />-->
+            <!--               </image>-->
+            <!--            </ImageView>-->
+            <Text fill="#063659" layoutX="37.0" layoutY="348.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SAM Personal Manage">
+               <font>
+                  <Font name="System Bold Italic" size="25.0" />
+               </font>
+            </Text>
+            <!--                <ImageView fitHeight="213.0" fitWidth="239.0" layoutX="35.0" layoutY="112.0" pickOnBounds="true" preserveRatio="true">-->
+            <!--                    <image>-->
+            <!--                        <Image url="@img/Kita.jpg" />-->
+            <!--                    </image>-->
+            <!--                </ImageView>-->
+         </children>
+      </AnchorPane>
+   </left>
+   <right>
+      <AnchorPane prefHeight="500.0" prefWidth="404.0" style="-fx-background-color: #ffff;" BorderPane.alignment="CENTER">
+         <children>
+            <Text fill="#063659" layoutX="127.0" layoutY="146.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User singUp">
+               <font>
+                  <Font name="System Bold" size="21.0" />
+               </font>
+            </Text>
+            <Button fx:id="btnSignUp" layoutX="91.0" layoutY="290.0" mnemonicParsing="false" onAction="#onClickSignUp" prefHeight="37.0" prefWidth="191.0" style="-fx-background-color: #063659;" text="Registrasi" textFill="WHITE">
+               <padding>
+                  <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+               </padding>
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+            <PasswordField fx:id="txtPassword" layoutX="92.0" layoutY="228.0" prefHeight="26.0" prefWidth="189.0" promptText="Create Password" />
+            <CheckBox layoutX="92.0" layoutY="254.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="133.0" style="-fx-background-color: transparent;" text="Remember Me" textFill="#05121b" />
+            <Text layoutX="128.0" layoutY="447.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bcak to Login?" />
+            <Button fx:id="btnLogin" layoutX="205.0" layoutY="429.0" mnemonicParsing="false" onAction="#gotoLogin" prefHeight="26.0" prefWidth="57.0" style="-fx-background-color: none;" text="Login" textFill="#063659">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+            <TextField fx:id="txtUser" layoutX="92.0" layoutY="191.0" prefHeight="26.0" prefWidth="190.0" promptText="Create User" />
+         </children>
+      </AnchorPane>
+   </right>
+</BorderPane>

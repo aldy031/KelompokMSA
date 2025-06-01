@@ -13,6 +13,12 @@ public class DBConnector {
     private static volatile DBConnector instance = null;
 
     private DBConnector() {
+        try {
+            Class.forName("org.sqlite.JDBC");
+            this.connection = DriverManager.getConnection(DB_URL);
+        }catch (ClassNotFoundException | SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 
     public static DBConnector getInstance() {

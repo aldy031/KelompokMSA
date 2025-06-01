@@ -21,30 +21,30 @@ public class SignUpController {
     @FXML
     private TextField txtEmail;
     @FXML
-    private TextField txtUsername;
+    private TextField txtUser;
     @FXML
-    private PasswordField txtPass1;
+    private PasswordField txtPassword;
     @FXML
     private PasswordField txtPass2;
 
     @FXML
     private void onClickRegister(ActionEvent e) {
         String email = txtEmail.getText().trim();
-        String username = txtUsername.getText().trim();
-        String pass1 = txtPass1.getText();
+        String username = txtUser.getText().trim();
+        String pass1 = txtPassword.getText();
         String pass2 = txtPass2.getText();
 
         // Validasi input
         if (email.isBlank() || username.isBlank() || pass1.isBlank() || pass2.isBlank()) {
-            showAlert(Alert.AlertType.ERROR, "Semua field wajib diisi!");
+            showAlert(Alert.AlertType.ERROR, "Error", "Semua field wajib diisi!");
             return;
         }
 
         if (!pass1.equals(pass2)) {
-            showAlert(Alert.AlertType.ERROR, "Password tidak sama!");
-            txtPass1.clear();
+            showAlert(Alert.AlertType.ERROR, "Error", "Password tidak sama!");
+            txtPassword.clear();
             txtPass2.clear();
-            txtPass1.requestFocus();
+            txtPassword.requestFocus();
             return;
         }
 
@@ -58,8 +58,8 @@ public class SignUpController {
                 ResultSet rs = checkStmt.executeQuery();
 
                 if (rs.next()) {
-                    showAlert(Alert.AlertType.ERROR, "Username atau email sudah dipakai.");
-                    txtUsername.requestFocus();
+                    showAlert(Alert.AlertType.ERROR, "Error", "Username atau email sudah dipakai.");
+                    txtUser.requestFocus();
                     return;
                 }
             }
@@ -73,34 +73,38 @@ public class SignUpController {
                 int rowsInserted = insertStmt.executeUpdate();
 
                 if (rowsInserted > 0) {
-                    showAlert(Alert.AlertType.INFORMATION, "Registrasi berhasil! Silakan login.");
+                    showAlert(Alert.AlertType.INFORMATION, "Error", "Registrasi berhasil! Silakan login.");
                     gotoLogin(e);
                 } else {
-                    showAlert(Alert.AlertType.ERROR, "Registrasi gagal. Coba lagi.");
+                    showAlert(Alert.AlertType.ERROR, "Error", "Registrasi gagal. Coba lagi.");
                 }
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Terjadi kesalahan: " + ex.getMessage());
+            showAlert(Alert.AlertType.ERROR, "Error", "Terjadi kesalahan: " + ex.getMessage());
         }
     }
 
     @FXML
     private void gotoLogin(ActionEvent e) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
+            Parent root = FXMLLoader.load(
+                    getClass().getResource("/org/example/rifaldytamauka/Login.fxml"));
             Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
-            stage.setTitle("Login");
-            stage.show();
+            stage.setTitle("Sign-Up Page");
         } catch (IOException ex) {
             ex.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Error", "Tidak bisa membuka Login:\n" + ex.getMessage());
         }
     }
 
-    private void showAlert(Alert.AlertType alertType, String message) {
+    private void showAlert(Alert.AlertType alertType, String error, String message) {
         Alert alert = new Alert(alertType);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    public void onClickSignUp(ActionEvent actionEvent) {
     }
 }

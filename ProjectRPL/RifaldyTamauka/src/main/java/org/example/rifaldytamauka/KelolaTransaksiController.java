@@ -5,6 +5,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -168,8 +169,17 @@ public class KelolaTransaksiController implements Initializable {
     }
 
     @FXML
-    private void Logout() {
-        // logika logout
+    private void Logout(ActionEvent event) {
+        try {
+            Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            Parent root = FXMLLoader.load(getClass().getResource("/org/example/rifaldytamauka/Login.fxml"));
+            stage.setScene(new Scene(root));
+            stage.setTitle("Login");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Gagal memuat halaman Login");
+        }
     }
 
     private void navigate(MouseEvent event, String fxmlFile) {

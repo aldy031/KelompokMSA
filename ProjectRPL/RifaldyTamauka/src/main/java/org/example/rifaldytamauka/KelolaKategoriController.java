@@ -7,7 +7,10 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
@@ -15,10 +18,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.stage.Stage;
 import org.example.rifaldytamauka.data.Ringkasan;
 import org.example.rifaldytamauka.data.Transaksi;
 import org.example.rifaldytamauka.util.DBConnector;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.net.URL;
@@ -295,9 +300,17 @@ public class KelolaKategoriController implements Initializable {
     // Logout
     // -------------------------------
     @FXML
-    private void Logout() {
-        System.out.println("Logout user...");
-        // Tambahkan logika logout
+    private void Logout(ActionEvent event) {
+        try {
+            Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            Parent root = FXMLLoader.load(getClass().getResource("/org/example/rifaldytamauka/Login.fxml"));
+            stage.setScene(new Scene(root));
+            stage.setTitle("Login");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Gagal memuat halaman Login");
+        }
     }
 
     // -------------------------------
