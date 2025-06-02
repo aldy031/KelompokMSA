@@ -12,8 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-import org.example.rifaldytamauka.data.User;
-import org.example.rifaldytamauka.repo.UserRepo;
+import org.example.rifaldytamauka.data.user;
 import org.example.rifaldytamauka.util.DBConnector;
 import org.example.rifaldytamauka.util.SessionManager;
 
@@ -69,7 +68,7 @@ public class LoginController {
                 int userId = rs.getInt("id_user");
                 String username = rs.getString("username");
                 String password = rs.getString("password");
-                User loggedInUser = new User(userId, username, password);
+                user loggedInUser = new user(userId, username, password);
                 Alert alert;
                 if (loggedInUser != null) {
                     if(txtUsername.getText().equals("admin") && txtPassword.getText().equals("admin")) {

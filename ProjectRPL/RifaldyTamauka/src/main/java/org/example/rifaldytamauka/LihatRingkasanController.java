@@ -96,7 +96,7 @@ public class LihatRingkasanController implements Initializable {
     }
 
     private void getAllData() {
-        String query = "SELECT * FROM ringkasan";
+        String query = "SELECT * FROM Ringkasan";
         try (var statement = connection.createStatement();
              var resultSet = statement.executeQuery(query)) {
 

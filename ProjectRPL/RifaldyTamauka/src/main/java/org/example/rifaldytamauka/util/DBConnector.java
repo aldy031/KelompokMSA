@@ -1,6 +1,6 @@
 package org.example.rifaldytamauka.util;
 
-import org.example.rifaldytamauka.data.User;
+import org.example.rifaldytamauka.data.user;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -13,12 +13,6 @@ public class DBConnector {
     private static volatile DBConnector instance = null;
 
     private DBConnector() {
-        try {
-            Class.forName("org.sqlite.JDBC");
-            this.connection = DriverManager.getConnection(DB_URL);
-        }catch (ClassNotFoundException | SQLException ex) {
-            ex.printStackTrace();
-        }
     }
 
     public static DBConnector getInstance() {
@@ -119,16 +113,16 @@ public class DBConnector {
         }
     }
 
-    public List<User> getAllDataUsers() {
+    public List<user> getAllDataUsers() {
         String query = "SELECT * FROM users";
-        List<User> usersList = new ArrayList<>();
+        List<user> usersList = new ArrayList<>();
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 String username = resultSet.getString("username");
                 String pass = resultSet.getString("password");
-                User user = new User(id, username, pass);
+                user user = new user(id, username, pass);
                 usersList.add(user);
             }
         } catch (SQLException e) {

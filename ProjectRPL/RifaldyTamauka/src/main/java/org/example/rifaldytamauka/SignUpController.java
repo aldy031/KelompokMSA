@@ -7,6 +7,7 @@ import javafx.scene.*;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.example.rifaldytamauka.util.DBConnector;
 
@@ -36,12 +37,12 @@ public class SignUpController {
 
         // Validasi input
         if (email.isBlank() || username.isBlank() || pass1.isBlank() || pass2.isBlank()) {
-            showAlert(Alert.AlertType.ERROR, "Error", "Semua field wajib diisi!");
+            showAlert(Alert.AlertType.ERROR, "Semua field wajib diisi!", "Tidak bisa membuka Login:\n" + e.getClass());
             return;
         }
 
         if (!pass1.equals(pass2)) {
-            showAlert(Alert.AlertType.ERROR, "Error", "Password tidak sama!");
+            showAlert(Alert.AlertType.ERROR, "Password tidak sama!", "Tidak bisa membuka Login:\n" + e.getClass());
             txtPassword.clear();
             txtPass2.clear();
             txtPassword.requestFocus();
@@ -58,7 +59,7 @@ public class SignUpController {
                 ResultSet rs = checkStmt.executeQuery();
 
                 if (rs.next()) {
-                    showAlert(Alert.AlertType.ERROR, "Error", "Username atau email sudah dipakai.");
+                    showAlert(Alert.AlertType.ERROR, "Username atau email sudah dipakai.", "Tidak bisa membuka Login:\n" + e.getClass());
                     txtUser.requestFocus();
                     return;
                 }
@@ -73,15 +74,15 @@ public class SignUpController {
                 int rowsInserted = insertStmt.executeUpdate();
 
                 if (rowsInserted > 0) {
-                    showAlert(Alert.AlertType.INFORMATION, "Error", "Registrasi berhasil! Silakan login.");
+                    showAlert(Alert.AlertType.INFORMATION, "Registrasi berhasil! Silakan login.", "Tidak bisa membuka Login:\n" + e.getClass());
                     gotoLogin(e);
                 } else {
-                    showAlert(Alert.AlertType.ERROR, "Error", "Registrasi gagal. Coba lagi.");
+                    showAlert(Alert.AlertType.ERROR, "Registrasi gagal. Coba lagi.", "Tidak bisa membuka Login:\n" + e.getClass());
                 }
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Error", "Terjadi kesalahan: " + ex.getMessage());
+            showAlert(Alert.AlertType.ERROR, "Terjadi kesalahan: " + ex.getMessage(), "Tidak bisa membuka Login:\n" + ex.getMessage());
         }
     }
 
@@ -99,12 +100,26 @@ public class SignUpController {
         }
     }
 
-    private void showAlert(Alert.AlertType alertType, String error, String message) {
+    @FXML
+    private void navigateToLogin(MouseEvent event) {
+        navigate(event, "Login.fxml");
+    }
+    private void navigate(MouseEvent event, String fxmlFile) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/org/example/rifaldytamauka/" + fxmlFile));
+            Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void showAlert(Alert.AlertType alertType, String message, String s) {
         Alert alert = new Alert(alertType);
         alert.setContentText(message);
         alert.showAndWait();
     }
 
-    public void onClickSignUp(ActionEvent actionEvent) {
+    public void gotoSignUp(ActionEvent actionEvent) {
     }
 }

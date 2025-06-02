@@ -1,7 +1,7 @@
 package org.example.rifaldytamauka.repo;
 
 import org.example.rifaldytamauka.util.DBConnector;
-import org.example.rifaldytamauka.data.User;
+import org.example.rifaldytamauka.data.user;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -26,7 +26,7 @@ public class UserRepo {
     }
 
 
-    public static User login(String username, String password) {
+    public static user login(String username, String password) {
         String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
         try (Connection conn = DBConnector.getInstance().getConnection();
              PreparedStatement st = conn.prepareStatement(sql)) {

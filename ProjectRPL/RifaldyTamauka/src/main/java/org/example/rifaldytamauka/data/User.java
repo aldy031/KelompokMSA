@@ -1,6 +1,6 @@
 package org.example.rifaldytamauka.data;
 
-public class User {
+public class user {
     private int id;
 
     private String username;
@@ -33,13 +33,13 @@ public class User {
     }
 
     // konstruktor untuk Register (tanpa id)
-    public User(String username, String password) {
+    public user(String username, String password) {
 
         this.username = username;
         this.password = password;
     }
     // konstruktor full (dibaca dari DB)
-    public User(int id, String username, String password) {
+    public user(int id, String username, String password) {
         this( username, password);
         this.id = id;
     }

@@ -1,8 +1,8 @@
 package org.example.rifaldytamauka;
 
-import org.example.rifaldytamauka.data.User;
+import org.example.rifaldytamauka.data.user;
 
 public class UserManager {
-    public static User currentUser;
+    public static user currentUser;
 
 }

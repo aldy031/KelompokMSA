@@ -152,6 +152,7 @@ public class Ringkasan {
         return persenPerubahanSaldo;
     }
 
+
     public void setPersenPerubahanSaldo(double persenPerubahanSaldo) {
         this.persenPerubahanSaldo = persenPerubahanSaldo;
     }
